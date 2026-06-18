@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SkyEye — Explainer Animation Prototype</title>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/scenes-field.css">
+<link rel="stylesheet" href="css/scenes-ai.css">
+<link rel="stylesheet" href="css/scenes-ops.css">
+</head>
+<body>
+
+<div class="kicker">OnPrime Showcase · SkyEye Aerial Intelligence Console · v0.5.10</div>
+<h1 class="pagetitle"><em>SkyEye</em> — explainer animation prototype</h1>
+
+<div class="player">
+  <div class="stage-wrap" id="stageWrap">
+    <div id="stage">
+
+      <!-- ================= SCENE 0 · 0–6.2s · orbital opener ================= -->
+      <section class="scene s0" id="s0">
+        <div class="stars"></div>
+        <div class="orbit">
+          <div class="globe">
+            <div class="atmo"></div>
+            <!-- rotating globe canvas injected by js/globe.js -->
+            <div class="aus-tag"><span class="ring"></span><span class="cross"></span><b>AUSTRALIA</b><i>27.0°S · 133.0°E</i></div>
+          </div>
+        </div>
+        <div class="chip"><b>01</b>Australian Context</div>
+      </section>
+
+      <!-- ================= SCENE 1 · 6.2–20s ================= -->
+      <section class="scene s1" id="s1">
+        <div class="world">
+          <div class="sky"></div>
+          <div class="sun"></div>
+          <svg class="cloud c1" width="240" height="90" viewBox="0 0 240 90">
+            <ellipse cx="70" cy="58" rx="60" ry="28"/><ellipse cx="130" cy="44" rx="55" ry="32"/><ellipse cx="185" cy="60" rx="50" ry="24"/>
+          </svg>
+          <svg class="cloud c2" width="240" height="90" viewBox="0 0 240 90">
+            <ellipse cx="70" cy="58" rx="60" ry="28"/><ellipse cx="130" cy="44" rx="55" ry="32"/><ellipse cx="185" cy="60" rx="50" ry="24"/>
+          </svg>
+          <svg class="cloud c3" width="240" height="90" viewBox="0 0 240 90">
+            <ellipse cx="70" cy="58" rx="60" ry="28"/><ellipse cx="130" cy="44" rx="55" ry="32"/><ellipse cx="185" cy="60" rx="50" ry="24"/>
+          </svg>
+          <svg class="birds b1" width="120" height="40" viewBox="0 0 120 40"><g class="flock">
+            <path d="M5,20 Q12,12 19,20 Q26,12 33,20"/>
+            <path d="M45,10 Q52,2 59,10 Q66,2 73,10"/>
+            <path d="M70,28 Q77,20 84,28 Q91,20 98,28"/>
+          </g></svg>
+          <svg class="birds b2" width="120" height="40" viewBox="0 0 120 40"><g class="flock">
+            <path d="M5,20 Q12,12 19,20 Q26,12 33,20"/>
+            <path d="M50,12 Q57,4 64,12 Q71,4 78,12"/>
+          </g></svg>
+          <svg class="hills" viewBox="0 0 1600 900" preserveAspectRatio="none">
+            <path d="M0,470 Q220,360 470,440 T980,420 T1600,455 L1600,560 L0,560 Z" fill="#a7c6a3" opacity=".8"/>
+            <path d="M0,490 Q330,400 720,468 T1600,480 L1600,580 L0,580 Z" fill="#8db983"/>
+          </svg>
+          <div class="haze"></div>
+
+          <!-- perspective crop rows -->
+          <svg class="rows" viewBox="0 0 1600 430" preserveAspectRatio="none">
+            <rect x="-600" y="0" width="2800" height="430" fill="#5f9a45"/>
+            <path d="M980,15 L-500,430 L-240,430 Z" fill="#6fae52"/>
+            <path d="M980,15 L-240,430 L20,430 Z" fill="#5c9543"/>
+            <path d="M980,15 L20,430 L280,430 Z" fill="#6fae52"/>
+            <path d="M980,15 L280,430 L540,430 Z" fill="#5c9543"/>
+            <path d="M980,15 L540,430 L800,430 Z" fill="#6fae52"/>
+            <path d="M980,15 L800,430 L1060,430 Z" fill="#5c9543"/>
+            <path d="M980,15 L1150,430 L1300,430 Z" fill="#c9a266"/>
+            <path d="M980,15 L1060,430 L1150,430 Z" fill="#6fae52"/>
+            <path d="M980,15 L1300,430 L1560,430 Z" fill="#5c9543"/>
+            <path d="M980,15 L1560,430 L1820,430 Z" fill="#6fae52"/>
+            <path d="M980,15 L1820,430 L2100,430 Z" fill="#5c9543"/>
+            <!-- paddock grid: constant-depth fence lines + tinted blocks
+                 so the wide shot reads as many paddocks, not one field -->
+            <g stroke="rgba(20,60,25,.28)" stroke-width="3" fill="none">
+              <line x1="-300" y1="120" x2="2000" y2="120"/>
+              <line x1="-380" y1="225" x2="2060" y2="225"/>
+              <line x1="-450" y1="330" x2="2120" y2="330"/>
+            </g>
+            <path d="M634,220 L891,220 L800,430 L280,430 Z" fill="rgba(217,183,94,.4)"/>
+            <path d="M1061,120 L1193,120 L1618,330 L1223,330 Z" fill="rgba(170,205,120,.45)"/>
+            <path d="M606,120 L737,120 L494,225 L231,225 Z" fill="rgba(150,190,110,.4)"/>
+            <rect x="-600" y="0" width="2800" height="60" fill="url(#hfade)" opacity=".5"/>
+            <defs><linearGradient id="hfade" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffe9b8"/><stop offset="1" stop-color="#ffe9b8" stop-opacity="0"/>
+            </linearGradient></defs>
+          </svg>
+          <div class="shadows"><div class="cshadow cs1"></div><div class="cshadow cs2"></div></div>
+
+          <!-- tractor -->
+          <div class="tractorline"><div class="tractor">
+            <svg width="150" height="84" viewBox="0 0 150 84">
+              <rect x="18" y="34" width="74" height="26" rx="6" fill="#2f7d32"/>
+              <rect x="78" y="12" width="40" height="44" rx="7" fill="#2f7d32"/>
+              <rect x="86" y="18" width="24" height="20" rx="4" fill="#bfe3ee"/>
+              <rect x="26" y="20" width="7" height="16" rx="3" fill="#27333a"/>
+              <g class="wheel"><circle cx="108" cy="62" r="20" fill="#27333a"/><circle cx="108" cy="62" r="11" fill="#e8c963"/>
+                <line x1="108" y1="52" x2="108" y2="72" stroke="#27333a" stroke-width="3"/>
+                <line x1="98" y1="62" x2="118" y2="62" stroke="#27333a" stroke-width="3"/></g>
+              <g class="wheel"><circle cx="38" cy="68" r="13" fill="#27333a"/><circle cx="38" cy="68" r="6.5" fill="#e8c963"/>
+                <line x1="38" y1="62" x2="38" y2="74" stroke="#27333a" stroke-width="2.5"/></g>
+            </svg>
+            <div class="dust"><span></span><span></span><span></span></div>
+          </div></div>
+
+          <svg class="windmill" viewBox="0 0 110 190">
+            <g class="wheelhead">
+              <circle cx="55" cy="31" r="24" fill="none" stroke="#5a6b73" stroke-width="4"/>
+              <g stroke="#5a6b73" stroke-width="4">
+                <line x1="55" y1="7" x2="55" y2="55"/><line x1="31" y1="31" x2="79" y2="31"/>
+                <line x1="38" y1="14" x2="72" y2="48"/><line x1="72" y1="14" x2="38" y2="48"/>
+              </g>
+              <circle cx="55" cy="31" r="6" fill="#42525a"/>
+            </g>
+            <path d="M47,48 L34,182 L43,182 L55,64 L67,182 L76,182 L63,48 Z" fill="#6b7b83"/>
+            <line x1="40" y1="126" x2="70" y2="126" stroke="#6b7b83" stroke-width="5"/>
+          </svg>
+
+          <svg class="tree t1" viewBox="0 0 140 160">
+            <rect x="64" y="90" width="12" height="64" rx="5" fill="#8a6a48"/>
+            <ellipse cx="56" cy="66" rx="38" ry="30" fill="#5d8f57"/>
+            <ellipse cx="92" cy="56" rx="34" ry="28" fill="#6da062"/>
+            <ellipse cx="72" cy="38" rx="32" ry="26" fill="#7cb06b"/>
+          </svg>
+          <svg class="tree t2" viewBox="0 0 140 160">
+            <rect x="64" y="90" width="12" height="64" rx="5" fill="#8a6a48"/>
+            <ellipse cx="60" cy="60" rx="40" ry="32" fill="#679a5c"/>
+            <ellipse cx="86" cy="44" rx="30" ry="24" fill="#7cb06b"/>
+          </svg>
+
+          <svg class="sheepline" viewBox="0 0 260 60">
+            <g class="sheep"><ellipse cx="40" cy="34" rx="26" ry="16" fill="#f4f1e6"/><circle cx="62" cy="28" r="8" fill="#3c3a36"/>
+              <line x1="30" y1="48" x2="30" y2="58" stroke="#3c3a36" stroke-width="3"/><line x1="50" y1="48" x2="50" y2="58" stroke="#3c3a36" stroke-width="3"/></g>
+            <g class="sheep k2"><ellipse cx="130" cy="38" rx="22" ry="14" fill="#f4f1e6"/><circle cx="149" cy="33" r="7" fill="#3c3a36"/>
+              <line x1="122" y1="50" x2="122" y2="58" stroke="#3c3a36" stroke-width="3"/><line x1="138" y1="50" x2="138" y2="58" stroke="#3c3a36" stroke-width="3"/></g>
+            <g class="sheep"><ellipse cx="210" cy="32" rx="24" ry="15" fill="#f4f1e6"/><circle cx="231" cy="26" r="7.5" fill="#3c3a36"/>
+              <line x1="202" y1="46" x2="202" y2="56" stroke="#3c3a36" stroke-width="3"/><line x1="220" y1="46" x2="220" y2="56" stroke="#3c3a36" stroke-width="3"/></g>
+          </svg>
+
+          <!-- distant farm buildings -->
+          <svg class="farmhouse" style="position:absolute;left:1130px;top:476px;width:150px" viewBox="0 0 160 90">
+            <rect x="10" y="40" width="70" height="40" fill="#d8cdb6"/>
+            <path d="M5,42 L45,14 L85,42 Z" fill="#a8523e"/>
+            <rect x="36" y="58" width="14" height="22" fill="#6b4a36"/>
+            <rect x="92" y="48" width="44" height="32" fill="#b9b0a0"/>
+            <path d="M90,50 L114,34 L138,50 Z" fill="#8a8276"/>
+            <rect x="142" y="34" width="14" height="46" rx="6" fill="#c9c2b4"/>
+            <ellipse cx="149" cy="34" rx="7" ry="4" fill="#a9a294"/>
+          </svg>
+          <!-- second windmill far on the left -->
+          <svg class="windmill" style="left:180px;top:438px;width:54px;opacity:.85" viewBox="0 0 110 190">
+            <g class="wheelhead">
+              <circle cx="55" cy="31" r="24" fill="none" stroke="#5a6b73" stroke-width="4"/>
+              <g stroke="#5a6b73" stroke-width="4">
+                <line x1="55" y1="7" x2="55" y2="55"/><line x1="31" y1="31" x2="79" y2="31"/>
+                <line x1="38" y1="14" x2="72" y2="48"/><line x1="72" y1="14" x2="38" y2="48"/>
+              </g>
+              <circle cx="55" cy="31" r="6" fill="#42525a"/>
+            </g>
+            <path d="M47,48 L34,182 L43,182 L55,64 L67,182 L76,182 L63,48 Z" fill="#6b7b83"/>
+          </svg>
+          <!-- distant sheep mob -->
+          <svg style="position:absolute;left:1350px;top:548px;width:120px" viewBox="0 0 120 36" fill="#f4f1e6">
+            <ellipse cx="14" cy="18" rx="11" ry="7"/><ellipse cx="42" cy="24" rx="9" ry="6"/>
+            <ellipse cx="66" cy="14" rx="10" ry="6.5"/><ellipse cx="92" cy="22" rx="9" ry="6"/>
+            <ellipse cx="110" cy="12" rx="8" ry="5.5"/>
+          </svg>
+
+          <!-- the tiny farmer the camera pulls back onto -->
+          <svg class="tinyfarmer" viewBox="0 0 42 64">
+            <rect x="13" y="44" width="6" height="18" rx="3" fill="#4d5a63"/>
+            <rect x="23" y="44" width="6" height="18" rx="3" fill="#4d5a63"/>
+            <rect x="10" y="22" width="22" height="26" rx="9" fill="#3e7cb1"/>
+            <circle cx="21" cy="14" r="9" fill="#e8b98b"/>
+            <ellipse cx="21" cy="7" rx="13" ry="3.5" fill="#a9803f"/>
+            <path d="M13,7 Q13,1 21,1 Q29,1 29,7 Z" fill="#c0913f"/>
+          </svg>
+          <div class="pintag">1 farmer · ~4,000 ha</div>
+        </div>
+
+        <!-- close-up opening shot: shrinks ~10× onto the tiny farmer -->
+        <div class="closeshot">
+          <div class="csky"></div>
+          <div class="cglow"></div>
+          <svg class="farmer" viewBox="0 0 170 260">
+            <rect x="58" y="190" width="20" height="56" rx="8" fill="#4d5a63"/>
+            <rect x="92" y="190" width="20" height="56" rx="8" fill="#4d5a63"/>
+            <rect x="52" y="240" width="32" height="14" rx="6" fill="#3a3530"/>
+            <rect x="88" y="240" width="32" height="14" rx="6" fill="#3a3530"/>
+            <rect x="48" y="108" width="74" height="92" rx="26" fill="#3e7cb1"/>
+            <rect x="36" y="116" width="18" height="62" rx="9" fill="#3e7cb1" transform="rotate(8 45 147)"/>
+            <g class="scratcharm">
+              <rect x="112" y="62" width="18" height="60" rx="9" fill="#3e7cb1" transform="rotate(140 121 92)"/>
+            </g>
+            <circle cx="85" cy="74" r="30" fill="#e8b98b"/>
+            <path d="M62,70 Q85,84 108,70 L108,62 Q85,74 62,62 Z" fill="#d9a877" opacity=".5"/>
+            <ellipse cx="85" cy="46" rx="44" ry="10" fill="#a9803f"/>
+            <path d="M60,46 Q60,18 85,18 Q110,18 110,46 Z" fill="#c0913f"/>
+            <circle cx="74" cy="74" r="3.4" fill="#27333a"/>
+            <circle cx="96" cy="74" r="3.4" fill="#27333a"/>
+            <path d="M68,66 l12,4 M102,66 l-12,4" stroke="#27333a" stroke-width="2.6" stroke-linecap="round"/>
+            <path d="M77,92 Q85,87 93,92" stroke="#27333a" stroke-width="3" fill="none" stroke-linecap="round"/>
+          </svg>
+          <div class="thought">
+            <div class="cloud">
+              <span class="q">?</span>
+              <span class="kw k1">Pests? Weeds?</span>
+              <span class="kw k2">Water stress?</span>
+              <span class="kw k3">Where do I even look?</span>
+            </div>
+            <span class="puff p1"></span>
+            <span class="puff p2"></span>
+          </div>
+          <svg class="wheat wl" viewBox="0 0 460 220">
+            <g stroke="#b89b4e" stroke-width="6" stroke-linecap="round" fill="#d9b75e">
+              <line x1="40" y1="220" x2="58" y2="80"/><ellipse cx="60" cy="66" rx="13" ry="30"/>
+              <line x1="120" y1="220" x2="112" y2="60"/><ellipse cx="111" cy="44" rx="14" ry="32"/>
+              <line x1="200" y1="220" x2="216" y2="92"/><ellipse cx="219" cy="76" rx="13" ry="29"/>
+              <line x1="280" y1="220" x2="270" y2="70"/><ellipse cx="268" cy="52" rx="14" ry="32"/>
+              <line x1="360" y1="220" x2="376" y2="100"/><ellipse cx="379" cy="84" rx="12" ry="27"/>
+              <line x1="425" y1="220" x2="418" y2="120"/><ellipse cx="416" cy="104" rx="11" ry="25"/>
+            </g>
+          </svg>
+          <svg class="wheat wr" viewBox="0 0 460 220">
+            <g stroke="#b89b4e" stroke-width="6" stroke-linecap="round" fill="#d9b75e">
+              <line x1="60" y1="220" x2="78" y2="90"/><ellipse cx="80" cy="74" rx="13" ry="30"/>
+              <line x1="150" y1="220" x2="142" y2="64"/><ellipse cx="141" cy="48" rx="14" ry="32"/>
+              <line x1="240" y1="220" x2="256" y2="96"/><ellipse cx="259" cy="80" rx="13" ry="29"/>
+              <line x1="330" y1="220" x2="320" y2="76"/><ellipse cx="318" cy="58" rx="14" ry="32"/>
+              <line x1="410" y1="220" x2="422" y2="108"/><ellipse cx="424" cy="92" rx="12" ry="27"/>
+            </g>
+          </svg>
+        </div>
+        <div class="chip"><b>02</b>The Scale Problem</div>
+      </section>
+
+      <!-- ================= SCENE 2 · 20–26.2s ================= -->
+      <section class="scene s2" id="s2">
+        <div class="backdrop"></div>
+        <svg class="bgrows" viewBox="0 0 1600 430" preserveAspectRatio="none">
+          <rect x="-600" y="0" width="2800" height="430" fill="#5d8a48"/>
+          <path d="M980,15 L-240,430 L20,430 Z" fill="#578349" opacity=".7"/>
+          <path d="M980,15 L280,430 L540,430 Z" fill="#578349" opacity=".7"/>
+          <path d="M980,15 L800,430 L1060,430 Z" fill="#578349" opacity=".7"/>
+          <path d="M980,15 L1300,430 L1560,430 Z" fill="#578349" opacity=".7"/>
+        </svg>
+        <div class="dim"></div>
+        <div class="digits" id="digits"></div>
+
+        <svg class="weblines" viewBox="0 0 1600 900">
+          <path pathLength="1" class="dash" style="--d:2.2s" d="M260,210 Q480,330 690,200"/>
+          <path pathLength="1" class="dash" style="--d:2.45s" d="M770,200 Q920,320 1100,190"/>
+          <path pathLength="1" class="dash" style="--d:2.7s" d="M1180,220 Q1280,360 1290,420"/>
+          <path pathLength="1" class="dash" style="--d:2.9s" d="M300,250 Q420,470 380,520"/>
+          <path pathLength="1" class="dash" style="--d:3.1s" d="M430,560 Q650,640 660,610"/>
+          <path pathLength="1" class="dash" style="--d:3.3s" d="M960,640 Q1080,560 1140,560"/>
+          <path pathLength="1" class="dash" style="--d:3.5s" d="M700,250 Q620,420 480,540"/>
+          <path pathLength="1" class="dash" style="--d:3.7s" d="M1120,250 Q1000,420 980,600"/>
+        </svg>
+
+        <svg class="farmer" viewBox="0 0 170 260">
+          <rect x="58" y="190" width="20" height="56" rx="8" fill="#4d5a63"/>
+          <rect x="92" y="190" width="20" height="56" rx="8" fill="#4d5a63"/>
+          <rect x="52" y="240" width="32" height="14" rx="6" fill="#3a3530"/>
+          <rect x="88" y="240" width="32" height="14" rx="6" fill="#3a3530"/>
+          <rect x="48" y="108" width="74" height="92" rx="26" fill="#3e7cb1"/>
+          <rect x="30" y="100" width="18" height="62" rx="9" fill="#3e7cb1" transform="rotate(38 39 131)"/>
+          <rect x="122" y="100" width="18" height="62" rx="9" fill="#3e7cb1" transform="rotate(-38 131 131)"/>
+          <circle cx="85" cy="74" r="30" fill="#e8b98b"/>
+          <ellipse cx="85" cy="46" rx="44" ry="10" fill="#a9803f"/>
+          <path d="M60,46 Q60,18 85,18 Q110,18 110,46 Z" fill="#c0913f"/>
+          <circle cx="74" cy="74" r="3.4" fill="#27333a"/><circle cx="96" cy="74" r="3.4" fill="#27333a"/>
+          <path d="M68,66 l12,4 M102,66 l-12,4" stroke="#27333a" stroke-width="2.6" stroke-linecap="round"/>
+          <ellipse cx="85" cy="93" rx="6" ry="4.5" fill="#27333a"/>
+        </svg>
+
+        <div class="swarm">
+          <div class="dchip" style="left:150px;top:160px;--d:.3s;--r:-6deg;--dc:#1f7ae0"><i></i>Soil moisture 23%</div>
+          <div class="dchip" style="left:430px;top:115px;--d:.55s;--r:4deg;--dc:#2bd98a"><i></i>NDVI 0.61</div>
+          <div class="dchip" style="left:705px;top:165px;--d:.8s;--r:-3deg;--dc:#ffb13d"><i></i>Temp 34°C</div>
+          <div class="dchip warn" style="left:980px;top:115px;--d:1.05s;--r:5deg;--dc:#ff6757"><i></i>Pump #3 offline</div>
+          <div class="dchip" style="left:1255px;top:170px;--d:1.3s;--r:-5deg;--dc:#8f7bff"><i></i>Wind 18 km/h</div>
+          <div class="dchip" style="left:215px;top:330px;--d:1.5s;--r:5deg;--dc:#12b5c9"><i></i>Rain 0 mm · 21 days</div>
+          <div class="dchip" style="left:1180px;top:340px;--d:1.7s;--r:-4deg;--dc:#2bd98a"><i></i>Livestock: 412 head</div>
+          <div class="dchip" style="left:330px;top:485px;--d:1.9s;--r:-7deg;--dc:#ffb13d"><i></i>Feed level 40%</div>
+          <div class="dchip" style="left:1060px;top:505px;--d:2.1s;--r:6deg;--dc:#1f7ae0"><i></i>pH 6.4</div>
+          <div class="dchip warn" style="left:560px;top:565px;--d:2.3s;--r:4deg;--dc:#ff6757"><i></i>Sensor 14 — no signal</div>
+          <div class="dchip" style="left:880px;top:590px;--d:2.5s;--r:-5deg;--dc:#8f7bff"><i></i>Tank B 62%</div>
+          <div class="dchip" style="left:120px;top:615px;--d:2.7s;--r:6deg;--dc:#12b5c9"><i></i>Fuel use ↑ 9%</div>
+          <div class="dchip" style="left:1290px;top:625px;--d:2.85s;--r:-6deg;--dc:#ffb13d"><i></i>Frost risk Thu</div>
+          <div class="dchip" style="left:620px;top:330px;--d:3.0s;--r:3deg;--dc:#2bd98a"><i></i>Yield est. 3.1 t/ha</div>
+        </div>
+        <div class="bigq">?</div>
+        <div class="chip"><b>03</b>Data ≠ Insight</div>
+      </section>
+
+      <!-- ============ SCENE · SOLUTION BRIDGE · 26.2–38.1s ============
+           Bridges the problem (mod-1/2) to the system (mod-3→6) by
+           previewing the whole arc: problem → solution → result. -->
+      <section class="scene ssol" id="ssol">
+        <div class="sol-grid"></div>
+        <div class="sol-title">One platform — from problem to result
+          <small>HOW SKYEYE WORKS</small></div>
+
+        <div class="sol-flow">
+          <!-- the problem we just saw -->
+          <div class="sol-stage prob" style="--d:0s">
+            <div class="sol-cap">The problem</div>
+            <div class="sol-li">A whole farm to watch</div>
+            <div class="sol-li">Sensors — not answers</div>
+          </div>
+          <div class="sol-arrow a1" style="--d:.1s"></div>
+
+          <!-- the SkyEye system (previews the scenes that follow) -->
+          <div class="sol-stage sys" style="--d:0s">
+            <div class="sys-head"><span class="sys-dot"></span>SkyEye platform</div>
+            <div class="sol-pipe">
+              <span class="sol-pulse"></span>
+              <div class="sol-step" style="--d:.05s"><span class="si">
+                <svg class="icn ic-drone" viewBox="0 0 24 24" fill="none" stroke="#5ef2e0" stroke-width="1.6" stroke-linecap="round">
+                  <line x1="7" y1="9" x2="10.5" y2="11.5"/><line x1="17" y1="9" x2="13.5" y2="11.5"/>
+                  <g class="r1"><rect x="2.5" y="7.4" width="8" height="2" rx="1" fill="#5ef2e0" stroke="none"/></g>
+                  <g class="r2"><rect x="13.5" y="7.4" width="8" height="2" rx="1" fill="#5ef2e0" stroke="none"/></g>
+                  <rect x="9" y="11" width="6" height="4.6" rx="2"/>
+                  <circle class="cap" cx="12" cy="17.8" r="1.3" fill="#aef7ff" stroke="none"/>
+                </svg></span><b>Drone capture</b></div>
+              <div class="sol-step" style="--d:.15s"><span class="si">
+                <svg class="icn ic-eye" viewBox="0 0 24 24" fill="none" stroke="#5ef2e0" stroke-width="1.6">
+                  <path d="M2.5,12 Q12,5 21.5,12 Q12,19 2.5,12 Z"/>
+                  <circle class="pupil" cx="12" cy="12" r="3" fill="#5ef2e0" stroke="none"/>
+                  <line class="scan" x1="3.5" y1="12" x2="20.5" y2="12" stroke="#aef7ff" stroke-width="1.2"/>
+                </svg></span><b>AI vision</b></div>
+              <div class="sol-step" style="--d:.25s"><span class="si">
+                <svg class="icn ic-chat" viewBox="0 0 24 24" fill="none" stroke="#5ef2e0" stroke-width="1.6" stroke-linejoin="round">
+                  <path d="M4,5 H20 A1.5,1.5 0 0 1 21.5,6.5 V14 A1.5,1.5 0 0 1 20,15.5 H11 L7,18.5 V15.5 H4 A1.5,1.5 0 0 1 2.5,14 V6.5 A1.5,1.5 0 0 1 4,5 Z"/>
+                  <circle class="d d1" cx="8" cy="10.3" r="1.2" fill="#aef7ff" stroke="none"/>
+                  <circle class="d d2" cx="12" cy="10.3" r="1.2" fill="#aef7ff" stroke="none"/>
+                  <circle class="d d3" cx="16" cy="10.3" r="1.2" fill="#aef7ff" stroke="none"/>
+                </svg></span><b>LLM agronomist</b></div>
+              <div class="sol-step" style="--d:.35s"><span class="si">
+                <svg class="icn ic-bars" viewBox="0 0 24 24" fill="#5ef2e0">
+                  <rect class="bar b1" x="4" y="4" width="3.6" height="16" rx="1"/>
+                  <rect class="bar b2" x="10.2" y="4" width="3.6" height="16" rx="1"/>
+                  <rect class="bar b3" x="16.4" y="4" width="3.6" height="16" rx="1"/>
+                </svg></span><b>Live dashboard</b></div>
+            </div>
+          </div>
+          <div class="sol-arrow a2" style="--d:1.35s"></div>
+
+          <!-- the result we end on -->
+          <div class="sol-stage res" style="--d:1.5s">
+            <div class="sol-cap">The result</div>
+            <div class="sol-li up">Act earlier<b>↑</b></div>
+            <div class="sol-li down">Spend less<b>↓</b></div>
+            <div class="sol-li up">Grow more<b>↑</b></div>
+          </div>
+        </div>
+        <div class="chip"><b>04</b>The SkyEye Approach</div>
+      </section>
+
+      <!-- ================= SCENE 3 · 38.1–43.8s ================= -->
+      <section class="scene s3" id="s3">
+        <div class="skyband"></div>
+        <div class="p3wrap"><div class="p3">
+          <div class="quilt" id="quilt"></div>
+          <div class="ndvimask"><div class="ndvi"></div><div class="scanedge"></div></div>
+        </div></div>
+
+        <div class="ctile" style="left:330px;top:560px;--d:.35s;--mx:60px;--my:-330px;--ex:440px;--ey:-560px"></div>
+        <div class="ctile alt" style="left:580px;top:640px;--d:1.1s;--mx:80px;--my:-410px;--ex:460px;--ey:-660px"></div>
+        <div class="ctile" style="left:830px;top:520px;--d:1.85s;--mx:90px;--my:-290px;--ex:470px;--ey:-540px"></div>
+        <div class="ctile alt" style="left:1080px;top:610px;--d:2.6s;--mx:100px;--my:-380px;--ex:380px;--ey:-630px"></div>
+        <div class="ctile" style="left:1280px;top:540px;--d:3.25s;--mx:90px;--my:-310px;--ex:280px;--ey:-560px"></div>
+
+        <div class="flyer"><div class="bank"><div class="dronebob">
+          <svg width="360" height="170" viewBox="0 0 360 170">
+            <line x1="86" y1="70" x2="158" y2="88" stroke="#27444e" stroke-width="8" stroke-linecap="round"/>
+            <line x1="274" y1="70" x2="202" y2="88" stroke="#27444e" stroke-width="8" stroke-linecap="round"/>
+            <line x1="120" y1="52" x2="170" y2="80" stroke="#27444e" stroke-width="6" stroke-linecap="round"/>
+            <line x1="240" y1="52" x2="190" y2="80" stroke="#27444e" stroke-width="6" stroke-linecap="round"/>
+            <g class="rotor"><rect x="30" y="64" width="112" height="9" rx="4.5" fill="#39606c"/></g>
+            <g class="rotor" style="animation-delay:.04s"><rect x="218" y="64" width="112" height="9" rx="4.5" fill="#39606c"/></g>
+            <g class="rotor" style="animation-delay:.08s"><rect x="78" y="47" width="84" height="7" rx="3.5" fill="#45707c"/></g>
+            <g class="rotor" style="animation-delay:.02s"><rect x="198" y="47" width="84" height="7" rx="3.5" fill="#45707c"/></g>
+            <circle cx="86" cy="68" r="8" fill="#1c343c"/><circle cx="274" cy="68" r="8" fill="#1c343c"/>
+            <circle cx="120" cy="50" r="6" fill="#1c343c"/><circle cx="240" cy="50" r="6" fill="#1c343c"/>
+            <rect x="134" y="78" width="92" height="38" rx="19" fill="#11363f"/>
+            <rect x="142" y="85" width="50" height="10" rx="5" fill="#3fe7f2"/>
+            <circle class="navlight" cx="138" cy="112" r="5" fill="#ff5246"/>
+            <circle class="navlight gr" cx="222" cy="112" r="5" fill="#2bd98a"/>
+            <rect x="164" y="114" width="28" height="16" rx="6" fill="#1c343c"/>
+            <circle cx="178" cy="136" r="13" fill="#10282f"/>
+            <circle cx="178" cy="136" r="6.5" fill="#3fe7f2"/>
+            <path d="M146,116 L136,140 M212,116 L222,140" stroke="#1c343c" stroke-width="7" stroke-linecap="round"/>
+          </svg>
+        </div></div>
+        <div class="beam"></div>
+        <div class="dshadow"></div>
+        </div>
+
+        <div class="hud"><i></i><i></i><i></i><i></i>
+          <div class="rec"><i></i>REC · MULTISPECTRAL 4K</div>
+        </div>
+        <div class="chip"><b>05</b>Drone Capture</div>
+      </section>
+
+      <!-- ================= SCENE 4 · 43.8–51s ================= -->
+      <section class="scene s4" id="s4">
+        <div class="floorwrap"><div class="floor"></div></div>
+        <div class="spark" style="left:220px;top:260px"></div>
+        <div class="spark v" style="left:380px;top:640px;animation-delay:-2s"></div>
+        <div class="spark" style="left:1240px;top:220px;animation-delay:-4s"></div>
+        <div class="spark v" style="left:1430px;top:560px;animation-delay:-1s"></div>
+        <div class="spark" style="left:820px;top:160px;animation-delay:-3s"></div>
+        <div class="spark v" style="left:1100px;top:700px;animation-delay:-5s"></div>
+
+        <div class="plate">SkyEye Vision Engine
+          <small>ONBOARD DEEP-LEARNING INFERENCE</small></div>
+
+        <div class="pipeline">
+          <div class="incol">
+            <div class="collab">INPUT · DRONE CAPTURES</div>
+            <div class="minidrone">
+              <svg width="150" height="64" viewBox="0 0 200 90">
+                <line x1="46" y1="40" x2="86" y2="50" stroke="#27444e" stroke-width="6" stroke-linecap="round"/>
+                <line x1="154" y1="40" x2="114" y2="50" stroke="#27444e" stroke-width="6" stroke-linecap="round"/>
+                <g class="mrotor"><rect x="14" y="34" width="64" height="7" rx="3.5" fill="#39606c"/></g>
+                <g class="mrotor" style="animation-delay:.04s"><rect x="122" y="34" width="64" height="7" rx="3.5" fill="#39606c"/></g>
+                <circle cx="46" cy="38" r="6" fill="#1c343c"/><circle cx="154" cy="38" r="6" fill="#1c343c"/>
+                <rect x="74" y="46" width="52" height="24" rx="12" fill="#11363f"/>
+                <rect x="82" y="52" width="26" height="7" rx="3.5" fill="#3fe7f2"/>
+                <circle class="mlight" cx="100" cy="64" r="3.5" fill="#ff5246"/>
+              </svg>
+            </div>
+            <!-- captures tossed from the drone, one after another, into the net -->
+            <div class="ftile"    style="top:128px;--d:.1s;--fx:250px;--fy:34px"></div>
+            <div class="ftile f2" style="top:128px;--d:.65s;--fx:250px;--fy:34px"></div>
+            <div class="ftile f3" style="top:128px;--d:1.2s;--fx:250px;--fy:34px"></div>
+          </div>
+          <div class="net">
+            <svg id="netsvg" viewBox="0 0 560 440"></svg>
+            <div class="netbase">CNN · 24M PARAMS · EDGE-OPTIMISED</div>
+          </div>
+          <div class="outcol">
+            <div class="collab">OUTPUT · DETECTIONS</div>
+            <div class="otile">
+              <svg viewBox="0 0 380 300" style="position:absolute;inset:0">
+                <path pathLength="1" class="maskblob" style="--mc:#ff6757;--d:.35s"
+                  d="M60,80 Q90,40 140,60 Q190,75 175,125 Q160,170 105,160 Q50,150 60,80 Z"/>
+                <path pathLength="1" class="maskblob" style="--mc:#ffb13d;--d:.65s"
+                  d="M230,170 Q280,140 320,175 Q350,210 315,245 Q270,275 235,240 Q205,205 230,170 Z"/>
+              </svg>
+              <div class="scanline"></div>
+              <div class="bbox" style="--zc:#ff6757;left:40px;top:42px;width:158px;height:130px;--d:.75s"><span>Pest · 0.92</span></div>
+              <div class="bbox" style="--zc:#8f7bff;left:210px;top:34px;width:146px;height:104px;--d:1s"><span>Weed · 0.81</span></div>
+              <div class="bbox" style="--zc:#ffb13d;left:200px;top:148px;width:154px;height:120px;--d:1.25s"><span>Water stress · 0.87</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="techrow">
+          <div class="tchip" style="--d:2.4s">CNN backbone</div>
+          <div class="tchip" style="--d:2.6s">Semantic segmentation</div>
+          <div class="tchip" style="--d:2.8s">Anomaly detection</div>
+          <div class="tchip" style="--d:3s">Trained on 2M+ field images</div>
+        </div>
+        <div class="chip"><b>06</b>Deep Learning</div>
+      </section>
+
+      <!-- ================= SCENE 5 · LLM agronomist (TEMPORARILY DISABLED) =================
+           To restore: delete the `hidden` attribute below and re-add the s5 entry
+           to the SCENES/CAPTIONS arrays in js/main.js (see comment there). -->
+      <section class="scene s5" id="s5" hidden>
+        <div class="dots"></div>
+
+        <div class="chat">
+          <div class="chathead">
+            <div class="ai">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff">
+                <path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8z"/>
+                <path d="M19 14l.9 2.6L22.5 17.5l-2.6.9L19 21l-.9-2.6-2.6-.9 2.6-.9z" opacity=".8"/>
+              </svg>
+            </div>
+            <div><div class="t">Ask SkyEye</div><div class="s">LLM agronomist · online</div></div>
+          </div>
+          <div class="msgs">
+            <div class="bubble user"><span class="typed">What should I focus on today?</span></div>
+            <div class="tdots"><i></i><i></i><i></i></div>
+            <div class="bubble ai-msg">
+              <div class="aline" style="--d:4.2s"><b>1.</b><span>Inspect <b>pest hotspot</b> in the NE paddock — disease probability 0.92.</span></div>
+              <div class="aline" style="--d:4.9s"><b>2.</b><span>Pivot 2, sector 7 is <b>underwatered</b> — adjust irrigation before noon heat.</span></div>
+              <div class="aline" style="--d:5.6s"><b>3.</b><span>Targeted spray covers <b>only 12%</b> of the field — map sent to your sprayer.</span></div>
+              <div class="srcrow">
+                <span class="src" style="--d:6.3s">NDVI map</span>
+                <span class="src" style="--d:6.45s">Weather</span>
+                <span class="src" style="--d:6.6s">Soil probes</span>
+                <span class="src" style="--d:6.75s">Spray history</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="corewrap">
+          <div class="feedcard" style="left:6px;top:54px;--d:1.2s;--fx:190px;--fy:170px">Vision detections</div>
+          <div class="feedcard" style="right:6px;top:54px;--d:1.8s;--fx:-170px;--fy:170px">Weather forecast</div>
+          <div class="feedcard" style="left:-8px;top:300px;--d:2.4s;--fx:210px;--fy:-40px">Soil probes</div>
+          <div class="feedcard" style="right:-8px;top:300px;--d:3.0s;--fx:-190px;--fy:-40px">Spray history</div>
+          <div class="core">
+            <svg viewBox="0 0 24 24" fill="#fff">
+              <path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8z"/>
+              <path d="M19 14l.9 2.6L22.5 17.5l-2.6.9L19 21l-.9-2.6-2.6-.9 2.6-.9z" opacity=".85"/>
+            </svg>
+          </div>
+          <div class="corelab">Large Language Model
+            <small>REASONS OVER ALL FARM DATA</small></div>
+          <div class="plancard">
+            <h4>Today's action plan</h4>
+            <div><i>1</i>Scout NE paddock pest zone</div>
+            <div><i>2</i>Fix pivot 2 irrigation</div>
+            <div><i>3</i>Run 12% targeted spray</div>
+          </div>
+        </div>
+        <div class="chip"><b>06</b>LLM Agronomist</div>
+      </section>
+
+      <!-- ================= SCENE 6 · 51–64.2s ================= -->
+      <section class="scene s6" id="s6">
+        <div class="glow"></div>
+        <div class="dash">
+          <div class="dhead">
+            <div class="dlogo"></div>
+            <div class="dtitle">SkyEye · Farm Overview</div>
+            <div class="dlive"><i></i>LIVE — 12 paddocks scanned</div>
+          </div>
+          <div class="kpis">
+            <div class="kpi" style="--d:.8s"><div><div class="num">0.71</div><div class="lab">Avg NDVI</div></div>
+              <svg width="110" height="40" viewBox="0 0 110 40">
+                <polyline pathLength="1" points="0,32 18,28 36,30 54,20 72,22 90,12 110,8"/></svg></div>
+            <div class="kpi" style="--d:1.1s"><div><div class="num">−18%</div><div class="lab">Water use vs. last week</div></div>
+              <div class="trend">▼</div></div>
+            <div class="kpi" style="--d:1.4s"><div><div class="num">4</div><div class="lab">Active alerts</div></div>
+              <div class="trend bad">⚠</div></div>
+          </div>
+          <div class="dbody">
+            <div class="map" id="plotgrid">
+              <div class="radar"></div>
+              <!-- systematic lawnmower survey route the drone flies to cover
+                   every paddock (not a fence) — clarified by the legend below -->
+              <svg class="dpath" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M8,15 L92,15 L92,37 L8,37 L8,60 L92,60 L92,82 L8,82"
+                  vector-effect="non-scaling-stroke"/>
+              </svg>
+              <div class="dlegend"><span class="dl-line"></span>Drone survey route</div>
+              <div class="zone" style="--zc:#ff6757;left:9%;top:14%;width:21%;height:26%;--d:1.9s"><span>Pest risk</span></div>
+              <div class="zone water-zone" style="--zc:#ffb13d;left:46%;top:46%;width:26%;height:30%;--d:2.6s"><i class="zone-hotspot"></i><span class="below">Water stress</span></div>
+              <div class="zone" style="--zc:#1f7ae0;left:38%;top:16%;width:18%;height:24%;--d:3.3s"><span>Irrigation uneven</span></div>
+              <div class="zone" style="--zc:#8f7bff;left:12%;top:58%;width:18%;height:26%;--d:4.0s"><span>Spray zone</span></div>
+              <div class="ddot"></div>
+            </div>
+            <div class="side">
+              <div class="slabel">AI ANALYSIS</div>
+              <div class="abar"><i></i></div>
+              <div class="finding" style="--zc:#ff6757;--d:1.1s">Pest pressure — NE paddock<b>HIGH</b></div>
+              <div class="finding" style="--zc:#ffb13d;--d:1.35s">Water stress — sector 7<b>MED</b></div>
+              <div class="finding" style="--zc:#1f7ae0;--d:1.6s">Irrigation uneven — pivot 2<b>MED</b></div>
+              <div class="finding" style="--zc:#8f7bff;--d:1.85s">Targeted spray — 12% of field<b>PLAN</b></div>
+              <div class="actionplan">
+                <div class="ap-head">Priority actions</div>
+                <div class="ap-row" style="--zc:#ff6757;--d:2.25s"><i>1</i><span>Inspect NE pest zone</span><b>today</b></div>
+                <div class="ap-row" style="--zc:#1f7ae0;--d:2.45s"><i>2</i><span>Repair pivot 2 sector 7</span><b>next</b></div>
+                <div class="ap-row" style="--zc:#8f7bff;--d:2.65s"><i>3</i><span>Send 12% spray map</span><b>queued</b></div>
+              </div>
+              <div class="stat">
+                <div class="big">91% of crop healthy</div>
+                <div class="sub">Act on 4 zones — not 4,000 hectares</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="chip"><b>07</b>Action Dashboard</div>
+      </section>
+
+      <!-- ================= SCENE 7 · 64.9–80.8s ================= -->
+      <section class="scene s7" id="s7">
+        <div class="blob b1"></div><div class="blob b2"></div>
+        <div class="phone">
+          <div class="screen">
+            <div class="apphead">
+              <div class="t">Morning Outcome</div>
+              <div class="d">SkyEye · Tue 6:00 am · 3 priorities handled</div>
+            </div>
+            <div class="rows">
+              <div class="row" style="--zc:#ff6757;--d:1.2s">
+                <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1.1 0 2 .9 2 2h2l1-2 1.7 1-1 1.8c.8.9 1.3 2 1.3 3.2h2v2h-2v2h2v2h-2c0 .7-.1 1.3-.3 1.9l1.8 1-1 1.7-1.9-1.1c-1.3 1.5-3.3 2.5-5.6 2.5s-4.3-1-5.6-2.5L4.5 18.6l-1-1.7 1.8-1c-.2-.6-.3-1.2-.3-1.9H3v-2h2v-2H3V8h2c0-1.2.5-2.3 1.3-3.2L5.3 3 7 2l1 2h2c0-1.1.9-2 2-2z"/></svg></div>
+                <div><div class="tt">Pest zone inspected before spread</div><div class="ts">NE paddock · verified 6:20 am</div></div>
+                <svg class="check" width="24" height="24" viewBox="0 0 24 24"><path d="M4 12.5 L10 18 L20 6"/></svg>
+              </div>
+              <div class="row" style="--zc:#1f7ae0;--d:2.4s">
+                <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C12 2 5 10 5 15a7 7 0 0 0 14 0c0-5-7-13-7-13z"/></svg></div>
+                <div><div class="tt">Irrigation loss narrowed to one sector</div><div class="ts">Pivot 2 · field crew dispatched</div></div>
+                <svg class="check" width="24" height="24" viewBox="0 0 24 24"><path d="M4 12.5 L10 18 L20 6"/></svg>
+              </div>
+              <div class="row" style="--zc:#8f7bff;--d:3.6s">
+                <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3h8l1 4h3a2 2 0 0 1 2 2v9a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V3zm3 9a3 3 0 1 0 6 0 3 3 0 0 0-6 0z"/></svg></div>
+                <div><div class="tt">Spray plan reduced to 12% of field</div><div class="ts">Target map synced to sprayer</div></div>
+                <svg class="check" width="24" height="24" viewBox="0 0 24 24"><path d="M4 12.5 L10 18 L20 6"/></svg>
+              </div>
+            </div>
+            <div class="saves">
+              <div class="save" style="--d:4.6s"><div class="v">−18%</div><div class="k">water</div></div>
+              <div class="save" style="--d:4.9s"><div class="v">−12%</div><div class="k">chemicals</div></div>
+              <div class="save" style="--d:5.2s"><div class="v">−9%</div><div class="k">fuel</div></div>
+              <div class="save" style="--d:5.5s"><div class="v">+yield</div><div class="k">earlier action</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- outcome keyword cards filling the right space, with rise/fall motion -->
+        <div class="s7out">
+          <div class="ocard up"   style="--d:1.5s"><span class="oar">↑</span>Earlier action</div>
+          <div class="ocard down" style="--d:1.8s"><span class="oar">↓</span>Lower inputs</div>
+          <div class="ocard up"   style="--d:2.1s"><span class="oar">↑</span>Focused work</div>
+        </div>
+
+        <svg class="farmer farmerhappy" viewBox="0 0 170 260">
+          <rect x="58" y="190" width="20" height="56" rx="8" fill="#4d5a63"/>
+          <rect x="92" y="190" width="20" height="56" rx="8" fill="#4d5a63"/>
+          <rect x="52" y="240" width="32" height="14" rx="6" fill="#3a3530"/>
+          <rect x="88" y="240" width="32" height="14" rx="6" fill="#3a3530"/>
+          <rect x="48" y="108" width="74" height="92" rx="26" fill="#3e7cb1"/>
+          <rect x="120" y="92" width="18" height="62" rx="9" fill="#3e7cb1" transform="rotate(-130 129 123)"/>
+          <rect x="36" y="116" width="18" height="62" rx="9" fill="#3e7cb1" transform="rotate(8 45 147)"/>
+          <circle cx="85" cy="74" r="30" fill="#e8b98b"/>
+          <ellipse cx="85" cy="46" rx="44" ry="10" fill="#a9803f"/>
+          <path d="M60,46 Q60,18 85,18 Q110,18 110,46 Z" fill="#c0913f"/>
+          <path d="M70,72 q4,-5 8,0 M92,72 q4,-5 8,0" stroke="#27333a" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+          <path d="M74,88 Q85,98 96,88" stroke="#27333a" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+        </svg>
+
+        <div class="endcard">
+          <svg class="mark" viewBox="0 0 120 120">
+            <circle class="draw" pathLength="1" cx="60" cy="60" r="54" fill="none" stroke="#3fe7f2" stroke-width="3" opacity=".55"/>
+            <line x1="22" y1="40" x2="52" y2="52" stroke="#7fe9da" stroke-width="5" stroke-linecap="round"/>
+            <line x1="98" y1="40" x2="68" y2="52" stroke="#7fe9da" stroke-width="5" stroke-linecap="round"/>
+            <rect x="8" y="34" width="30" height="6" rx="3" fill="#aef3e2"/>
+            <rect x="82" y="34" width="30" height="6" rx="3" fill="#aef3e2"/>
+            <rect x="42" y="48" width="36" height="18" rx="9" fill="#eafffb"/>
+            <circle cx="60" cy="78" r="8" fill="#3fe7f2"/>
+            <path class="draw" pathLength="1" d="M48,86 Q60,108 72,86" fill="none" stroke="#3fe7f2" stroke-width="3" opacity=".75"/>
+          </svg>
+          <div class="word">Sky<b>Eye</b></div>
+          <div class="tag">Turning aerial inspection into clear farm actions.</div>
+          <div class="pills">
+            <div class="pill" style="--d:1.05s">Drone fleet</div>
+            <div class="pill" style="--d:1.2s">Deep-learning vision</div>
+            <div class="pill" style="--d:1.35s">LLM agronomist</div>
+          </div>
+          <div class="mini">AI-powered drone platform · Australia</div>
+          <div class="qrcard">
+            <img src="assets/SkyEyeQRCode-brand.png" alt="SkyEye QR code" />
+            <span>Scan to learn more</span>
+          </div>
+        </div>
+        <div class="chip"><b>08</b>Farm Outcome</div>
+      </section>
+
+      <!-- overlays -->
+      <div id="vignette"></div>
+      <div id="grain"></div>
+
+      <div id="captionBar"><p id="caption"></p></div>
+      <!-- Draft narration (edge-tts, en-AU). Regenerate via docs/audio-production.md. -->
+      <audio id="voiceover" src="audio/voiceover.mp3" preload="auto"></audio>
+      <div id="replay"><div class="rbtn">
+        <div class="circ"><svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/></svg></div>
+        Replay
+      </div></div>
+      <div id="startposter"><div class="rbtn">
+        <div class="circ"><svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg></div>
+        Play
+      </div></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="cbtn" id="btnPlay" title="Play / Pause (Space)">
+      <svg id="icPause" viewBox="0 0 24 24"><rect x="5" y="4" width="5" height="16" rx="1.5"/><rect x="14" y="4" width="5" height="16" rx="1.5"/></svg>
+      <svg id="icPlay" viewBox="0 0 24 24" style="display:none"><path d="M7 4l13 8-13 8z"/></svg>
+    </button>
+    <button class="cbtn" id="btnRestart" title="Restart (R)">
+      <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/></svg>
+    </button>
+    <div class="track" id="track">
+      <div class="rail"></div>
+      <div id="prog"></div>
+    </div>
+    <div id="clock">00.0 / 80.8</div>
+    <button class="cbtn" id="btnFull" title="Fullscreen (F)">
+      <svg viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4V4zm10 0h6v6h-2V6h-4V4zM4 14h2v4h4v2H4v-6zm14 0h2v6h-6v-2h4v-4z"/></svg>
+    </button>
+  </div>
+</div>
+
+<script src="js/lib/d3-array.min.js"></script>
+<script src="js/lib/d3-geo.min.js"></script>
+<script src="js/globe-data.js"></script>
+<script src="js/globe.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
