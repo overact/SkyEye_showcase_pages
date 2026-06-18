@@ -375,25 +375,15 @@ body.rec .stage-wrap{border-radius:0;box-shadow:none}
    force horizontal scroll or bury the controls below the fold. */
 @media (max-width:760px){
   body{
-    padding:14px 10px 24px;
+    padding:0 8px 8px;
     align-items:stretch;
+    overflow:hidden;
   }
-  .kicker{
-    max-width:100%;
-    text-align:center;
-    letter-spacing:.16em;
-    font-size:.58rem;
-    line-height:1.45;
-  }
-  h1.pagetitle{
-    text-align:center;
-    font-size:1.05rem;
-    line-height:1.15;
-    margin-bottom:12px;
-  }
+  .kicker,h1.pagetitle,.hint,.note{display:none}
   .player,.note{width:100%}
   .stage-wrap{
-    border-radius:10px;
+    margin-top:8px;
+    border-radius:8px;
     box-shadow:0 18px 48px rgba(0,0,0,.5), 0 0 0 1px rgba(127,214,201,.14);
   }
   .chip{
@@ -416,46 +406,46 @@ body.rec .stage-wrap{border-radius:0;box-shadow:none}
   .controls{
     width:100%;
     flex-wrap:wrap;
-    gap:10px;
-    margin-top:10px;
-    padding:10px;
-    border-radius:12px;
+    gap:6px;
+    margin-top:6px;
+    padding:6px 8px;
+    border-radius:8px;
   }
   .cbtn{
-    width:40px;
-    height:40px;
-    border-radius:10px;
+    width:34px;
+    height:34px;
+    border-radius:8px;
+  }
+  .cbtn svg{
+    width:16px;
+    height:16px;
   }
   .track{
     order:10;
     flex:0 0 100%;
     min-width:100%;
-    height:32px;
+    height:24px;
   }
-  .track .rail,.track #prog{top:13px}
-  .track .mark{top:8px}
+  .track .rail,.track #prog{
+    top:10px;
+    height:4px;
+  }
+  .track .mark{
+    top:5px;
+    width:14px;
+    height:14px;
+    border-width:2px;
+  }
   .track .mark .tip{display:none}
   #clock{
     margin-left:auto;
-    min-width:94px;
-    font-size:13px;
-  }
-  .hint{
-    margin-top:10px;
+    min-width:82px;
     font-size:12px;
-    line-height:1.5;
-  }
-  .note{
-    margin-top:16px;
-    padding:16px;
-    border-radius:12px;
   }
 }
 
 @media (max-width:420px){
   body{padding-left:8px;padding-right:8px}
-  .kicker{letter-spacing:.12em}
-  h1.pagetitle{font-size:.98rem}
   .chip{
     top:36px;
     left:36px;
@@ -473,5 +463,4 @@ body.rec .stage-wrap{border-radius:0;box-shadow:none}
     font-size:56px;
     padding:18px 26px;
   }
-  .hint kbd{padding:1px 5px}
 }
