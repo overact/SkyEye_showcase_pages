@@ -210,6 +210,20 @@ function clearPendingVoiceoverSeek(){
   voiceover.removeEventListener(pendingVoiceoverSeek.event,pendingVoiceoverSeek.handler);
   pendingVoiceoverSeek=null;
 }
+function exitFrameExportMode(){
+  if(!document.body.classList.contains('frame-export')) return;
+  document.body.classList.remove('frame-export');
+  SCENES.forEach(s=>{
+    const el=document.getElementById(s.id);
+    if(!el) return;
+    el.style.transition='';
+    el.style.opacity='';
+    el.style.transform='';
+  });
+  document.getAnimations().forEach(animation=>{
+    try{ animation.play(); }catch(e){}
+  });
+}
 function startVoiceover(){
   const attempt=voiceover.play();
   if(attempt && typeof attempt.catch==='function'){
@@ -373,6 +387,7 @@ function frame(){
 function play(){
   if(ended) return restart();
   if(playing) return;
+  exitFrameExportMode();
   playing=true; startStamp=now();
   stage.classList.remove('paused');
   stage.classList.remove('prestart');
@@ -400,12 +415,14 @@ function finish(){
 }
 function seekScene(i){
   cancelAnimationFrame(raf);
+  exitFrameExportMode();
   ended=false; replay.classList.remove('show');
   stage.classList.remove('paused');
   stage.classList.remove('prestart');
   curScene=-1; curCap=-2;
   base=SCENES[i].t; startStamp=now();
   playing=true;
+  renderAt(base);
   playVoiceover(base);
   icPlay.style.display='none'; icPause.style.display='';
   raf=requestAnimationFrame(frame);
