@@ -74,6 +74,33 @@ h1.pagetitle em{font-style:normal;color:var(--teal)}
 .scene.leaving *{animation-play-state:paused !important}
 #stage.paused *{animation-play-state:paused !important}
 
+/* ── GPU budget control — single point of control for mobile crashes ──
+   `backdrop-filter` is the dominant compositor/memory cost on mobile and it
+   peaks during the cross-fade, when the leaving scene and the incoming scene
+   are both painted at once (two full sets of blur buffers). These rules make
+   sure only the single active scene ever pays the blur cost, and drop it
+   entirely on capability-limited devices (set via data-perf in index.html).
+   Off-screen scenes are also pulled out of rendering to free their layers. */
+.scene.leaving *,
+.scene:not(.on) *{
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+body:not(.frame-export) .scene:not(.on):not(.leaving){
+  content-visibility:hidden;
+}
+html[data-perf="lite"] *{
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+/* Lite fallback: a few panels leaned on the blur for separation. Without it,
+   raise their background so text stays readable over the live scene behind. */
+html[data-perf="lite"] .s4 .tchip{background:rgba(13,58,68,.82)}
+html[data-perf="lite"] .s4 .feedcard{background:rgba(20,40,52,.92)}
+html[data-perf="lite"] .s2 .dchip{background:rgba(247,245,235,.96)}
+html[data-perf="lite"] .s7 .ocard{background:rgba(247,248,250,.96)}
+html[data-perf="lite"] #caption{background:rgba(7,18,22,.86)}
+
 /* scene number chip */
 .chip{
   position:absolute;top:90px;left:90px;z-index:56;

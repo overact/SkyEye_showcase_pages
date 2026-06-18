@@ -4,6 +4,26 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>SkyEye — Explainer Animation Prototype</title>
+<script>
+/* Performance tier — runs before first paint so the stage never flashes the
+   expensive look. Capability-based, NOT screen width: a small touch screen,
+   low device memory, or reduced-motion preference all drop us to the "lite"
+   tier, where css/base.css disables backdrop-filter (the dominant cause of
+   mobile tab crashes during scene cross-fades). Force with ?perf=lite|full. */
+(function(){
+  var q=new URLSearchParams(location.search).get('perf');
+  var lite;
+  if(q==='lite'||q==='full'){ lite=(q==='lite'); }
+  else{
+    var mm=function(s){try{return matchMedia(s).matches}catch(e){return false}};
+    var coarse=mm('(pointer:coarse)'), small=mm('(max-width:900px)');
+    var lowMem=(navigator.deviceMemory||8)<=4;
+    var reduced=mm('(prefers-reduced-motion:reduce)');
+    lite=(coarse&&small)||lowMem||reduced;
+  }
+  if(lite) document.documentElement.setAttribute('data-perf','lite');
+})();
+</script>
 <link rel="stylesheet" href="css/fonts.css">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/scenes-field.css">
