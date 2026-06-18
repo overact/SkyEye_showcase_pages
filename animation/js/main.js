@@ -156,6 +156,15 @@ function sceneIndexAt(t){
   while(i>0 && t<SCENES[i].t) i--;
   return i;
 }
+function restartSceneCssAnimations(el){
+  const animated=[el,...el.querySelectorAll('*')].filter(node=>{
+    return getComputedStyle(node).animationName!=='none';
+  });
+  if(!animated.length) return;
+  animated.forEach(node=>{ node.style.animation='none'; });
+  void el.offsetWidth;
+  animated.forEach(node=>{ node.style.animation=''; });
+}
 function activateScene(i){
   if(i===curScene) return;
   curScene=i;
@@ -168,6 +177,7 @@ function activateScene(i){
       el.classList.remove('on');
       void el.offsetWidth;
       el.classList.add('on');
+      restartSceneCssAnimations(el);
     }else if(el.classList.contains('on')){
       if(timer) clearTimeout(timer);
       el.classList.add('leaving');
