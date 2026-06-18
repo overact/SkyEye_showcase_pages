@@ -2,15 +2,9 @@
 
 This repository hosts the public static GitHub Pages version of the SkyEye showcase animation.
 
-Public page:
+Access page: https://overact.github.io/SkyEye_showcase_pages/
 
-https://overact.github.io/SkyEye_showcase_pages/
-
-Source project:
-
-https://github.com/overact/SkyEye_showcase
-
-The source project remains private. This public repository contains only the static files needed
+This repository contains only the static files needed
 to serve the browser animation and its voice-over audio on GitHub Pages.
 
 ## Contents
