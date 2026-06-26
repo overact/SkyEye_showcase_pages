@@ -210,7 +210,7 @@
 
 /* Drone dot — ping + neon bloom */
 .s6 .ddot{position:absolute;left:9%;bottom:14%;width:22px;height:22px;opacity:0}
-.scene.on .ddot{animation:fadeIn .4s 1.6s both, dronePatrol 7s 1.6s infinite linear}
+.scene.on .ddot{animation:fadeIn .4s 1.6s both, dronePatrol 5.5s 1.6s infinite linear}
 .s6 .ddot::before{
   content:"";position:absolute;inset:0;border-radius:50%;
   background:#5ef2e0;
@@ -550,30 +550,41 @@
 .scene.on.endphase .endcard .mini{animation:fadeUp .5s 1.55s both ease}
 
 /* =====================================================
-   SCENE 7 — outcome keyword cards (fills the empty right
-   side; rise/fall motion echoes "spend less / grow more")
+   SCENE 7 — growth curves (right-side hero). Two lines
+   draw in rising over the season: revenue/yield + efficiency,
+   echoing "spend less, grow more". Austere by design so it
+   reads against the busy payoff scene.
 ===================================================== */
-.s7 .s7out{position:absolute;right:110px;top:170px;width:420px;z-index:6;
-  display:flex;flex-direction:column;gap:20px}
-.s7 .ocard{display:flex;align-items:center;gap:18px;opacity:0;
-  background:rgba(255,255,255,.88);
+.s7 .s7chart{position:absolute;right:90px;top:150px;width:470px;z-index:6;opacity:0;
+  background:rgba(255,255,255,.82);
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  border:1.5px solid rgba(18,181,201,.3);border-radius:18px;padding:16px 26px;
-  font-family:var(--font-display);font-weight:800;font-size:31px;color:#0c2b33;
+  border:1.5px solid rgba(18,181,201,.28);border-radius:22px;padding:18px 24px 14px;
   box-shadow:0 16px 40px rgba(18,90,110,.16),inset 0 1px 0 rgba(255,255,255,.9)}
-.scene.on .ocard{animation:slideInR .6s var(--d) both ease}
-.s7 .ocard.up{border-left:5px solid #2bd98a}
-.s7 .ocard.down{border-left:5px solid #1f7ae0}
-.s7 .ocard .oar{width:52px;height:52px;border-radius:14px;flex:none;
-  display:grid;place-items:center;font-size:30px;color:#fff}
-.s7 .ocard.up .oar{background:linear-gradient(135deg,#2bd98a,#12b5c9);
-  box-shadow:0 0 22px rgba(43,217,138,.5)}
-.s7 .ocard.down .oar{background:linear-gradient(135deg,#1f7ae0,#12b5c9);
-  box-shadow:0 0 22px rgba(31,122,224,.5)}
-.scene.on .ocard.up .oar{animation:so-arrUp 2s 2.8s ease-in-out infinite}
-.scene.on .ocard.down .oar{animation:so-arrDown 2s 2.8s ease-in-out infinite}
-@keyframes so-arrUp{0%,100%{transform:translateY(5px)}50%{transform:translateY(-6px)}}
-@keyframes so-arrDown{0%,100%{transform:translateY(-5px)}50%{transform:translateY(6px)}}
+.scene.on .s7chart{animation:fadeUp .6s 1.2s both ease}
+.s7 .s7chart-head{display:flex;align-items:center;gap:11px;margin-bottom:4px;
+  font-family:var(--font-display);font-weight:800;font-size:23px;color:#0c2b33}
+.s7 .s7chart-arrow{width:34px;height:34px;border-radius:10px;flex:none;
+  display:grid;place-items:center;font-size:22px;color:#fff;
+  background:linear-gradient(135deg,#2bd98a,#12b5c9);box-shadow:0 0 18px rgba(43,217,138,.45)}
+.s7 .s7chart-svg{display:block;width:100%;height:auto}
+.s7 .s7chart-grid line{stroke:rgba(12,43,51,.12);stroke-width:1.5;stroke-dasharray:4 6}
+.s7 .s7line{fill:none;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:1;stroke-dashoffset:1}
+.s7 .s7line.rev{stroke:#2bd98a;filter:drop-shadow(0 3px 8px rgba(43,217,138,.35))}
+.s7 .s7line.eff{stroke:#12b5c9;filter:drop-shadow(0 3px 8px rgba(18,181,201,.30))}
+.scene.on .s7line.rev{animation:drawLine 1.2s 1.5s both ease}
+.scene.on .s7line.eff{animation:drawLine 1.2s 1.75s both ease}
+.s7 .s7dot{opacity:0}
+.s7 .s7dot.rev{fill:#2bd98a}
+.s7 .s7dot.eff{fill:#12b5c9}
+.scene.on .s7dot.rev{animation:fadeIn .4s 2.55s both}
+.scene.on .s7dot.eff{animation:fadeIn .4s 2.8s both}
+.s7 .s7chart-legend{display:flex;gap:22px;margin-top:6px;
+  font-family:var(--font-mono);font-size:12.5px;letter-spacing:.06em;color:rgba(12,43,51,.68)}
+.s7 .s7leg{display:flex;align-items:center;gap:7px}
+.s7 .s7leg i{width:16px;height:4px;border-radius:2px;display:inline-block}
+.s7 .s7leg.rev i{background:#2bd98a}
+.s7 .s7leg.eff i{background:#12b5c9}
 
 /* QR card — bottom-right of the endcard. The QR stays black-on-white on a
    clean light card so it remains scannable against the dark brand gradient. */

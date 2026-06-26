@@ -95,32 +95,33 @@
    (s0 starts at t:0 so the orbit is on screen from frame 0; the voice itself
    has a 0.4s lead-in, which is why the first caption is at 0.4.) */
 const SCENES=[
-  {id:'s0',  t:0,    label:'Australian context'},
-  {id:'s1',  t:6.65, label:'Scale problem'},
-  {id:'s2',  t:19.7, label:'Data limits'},
-  {id:'ssol',t:26.08,label:'SkyEye approach'},
-  {id:'s3',  t:37.89,label:'Drone capture'},
-  {id:'s4',  t:43.77,label:'Deep learning'},
-  {id:'s6',  t:51.06,label:'Action dashboard'},
-  {id:'s7',  t:64.14,label:'Farm outcome'},
+  {id:'s0', t:0, label:'Australian context'},
+  {id:'s1', t:6.3, label:'Scale problem'},
+  {id:'s2', t:15.81, label:'Data limits'},
+  {id:'ssol', t:21.66, label:'SkyEye approach'},
+  {id:'s3', t:27.98, label:'Drone capture'},
+  {id:'s4', t:33.47, label:'Deep learning'},
+  {id:'s6', t:39.41, label:'Action dashboard'},
+  {id:'s7', t:47.53, label:'Farm outcome'},
 ];
-const TOTAL=80.6;
-const ENDCARD_AT=73.13;
+const TOTAL=61.0;
+const ENDCARD_AT=54.53;
+// Scenes activate this many seconds BEFORE their audio cue, so the incoming
+// scene's motion overlaps the tail of the previous voice instead of waiting for
+// it to finish (kills the dead beat at scene ends). Captions/clock stay on the
+// raw audio time; only the visuals lead.
+const SCENE_LEAD=0.6;
 const SCENE_FADE_MS=550;
 const CAPTIONS=[
-  [0.4,  "Australian agriculture creates over AUD 50 billion a year."],
-  [6.65, "But many farmers face the same problem: farms are too vast to inspect by hand."],
-  [12.5, "One farmer may manage thousands of hectares, and checking everything takes time, labour and fuel."],
-  [19.7, "Data helps, but it can be delayed, scattered, or too coarse for daily decisions."],
-  [26.08,"That is where SkyEye comes in: drone inspection from above, analysed by AI."],
-  [32.08,"The pipeline moves from capture, to vision, to a clear farm overview."],
-  [37.89,"Drones capture high-resolution and multispectral views across each paddock."],
-  [43.77,"AI vision flags crop stress, weeds, pests, irrigation issues and asset risks."],
-  [51.06,"SkyEye combines detections with farm records."],
-  [55.06,"The result is a practical action map: fix this zone, repair this fence, check this livestock group, or spray only where needed."],
-  [64.14,"Farmers focus on the few areas that need attention first."],
-  [68.5, "They can act earlier, spend less, and grow more."],
-  [73.28,"SkyEye — turning aerial inspection into clear farm actions."],
+  [0.4, "Australian agriculture creates over AUD 50 billion a year."],
+  [6.3, "But many farms are too vast to inspect by hand — one farmer may manage thousands of hectares, and checking it all costs time and fuel."],
+  [15.81, "Data helps, but it is often delayed, scattered, or too coarse to act on."],
+  [21.66, "That is where SkyEye comes in — drone inspection from above, analysed by AI."],
+  [27.98, "Drones capture high-resolution, multispectral views of every paddock."],
+  [33.47, "AI vision flags crop stress, weeds, pests, and irrigation risks."],
+  [39.41, "SkyEye combines detections with farm records into one action map — fix this zone, spray only where needed."],
+  [47.53, "So farmers focus on what matters first — acting earlier, spending less, and growing more."],
+  [54.68, "SkyEye — turning aerial inspection into clear farm actions."],
 ];
 
 const stage=document.getElementById('stage');
@@ -151,6 +152,18 @@ const hasVoiceover=()=>Boolean(voiceover && (
 const shouldUseVoiceover=()=>hasVoiceover() && !recordingMode;
 const clampTime=t=>Math.max(0,Math.min(t,TOTAL));
 
+// Visual start of a scene = its audio cue pulled SCENE_LEAD earlier (clamped at 0
+// for the opener), so its CSS animations begin before the narration reaches it.
+function sceneVisualStart(k){
+  return k<=0 ? 0 : Math.max(0, SCENES[k].t - SCENE_LEAD);
+}
+// Scene whose VISUAL window contains t (used to drive activation/crossfade).
+function sceneIndexAtVisual(t){
+  let i=SCENES.length-1;
+  while(i>0 && t<sceneVisualStart(i)) i--;
+  return i;
+}
+const endphaseStart=()=>Math.max(0, ENDCARD_AT - SCENE_LEAD);
 function sceneIndexAt(t){
   let i=SCENES.length-1;
   while(i>0 && t<SCENES[i].t) i--;
@@ -281,9 +294,9 @@ function reconcileVoiceover(t){
   if(Math.abs(voiceover.currentTime-t)>.2) syncVoiceover(t);
 }
 function renderAt(t){
-  activateScene(sceneIndexAt(t));
+  activateScene(sceneIndexAtVisual(t));
   const outcome=document.getElementById('s7');
-  if(outcome) outcome.classList.toggle('endphase', t>=ENDCARD_AT);
+  if(outcome) outcome.classList.toggle('endphase', t>=endphaseStart());
   updateCaption(t);
   prog.style.width=(t/TOTAL*100)+'%';
   clock.textContent=t.toFixed(1).padStart(4,'0')+' / '+TOTAL.toFixed(1);
@@ -308,11 +321,11 @@ function updateCaptionForExport(t){
 
 function renderFrameForExport(t){
   const target=clampTime(t);
-  const activeIdx=sceneIndexAt(target);
+  const activeIdx=sceneIndexAtVisual(target);
   const active=SCENES[activeIdx];
   const activeEl=document.getElementById(active.id);
   const fadeSeconds=SCENE_FADE_MS/1000;
-  const fadeElapsed=activeIdx===0 ? fadeSeconds : target-active.t;
+  const fadeElapsed=activeIdx===0 ? fadeSeconds : target-sceneVisualStart(activeIdx);
   const fadeProgress=Math.max(0,Math.min(1,fadeElapsed/fadeSeconds));
   const prevIdx=activeIdx>0 && fadeElapsed<fadeSeconds ? activeIdx-1 : -1;
   const prevEl=prevIdx>=0 ? document.getElementById(SCENES[prevIdx].id) : null;
@@ -346,15 +359,15 @@ function renderFrameForExport(t){
   });
 
   const outcome=document.getElementById('s7');
-  if(outcome) outcome.classList.toggle('endphase', target>=ENDCARD_AT);
+  if(outcome) outcome.classList.toggle('endphase', target>=endphaseStart());
   updateCaptionForExport(target);
   prog.style.width=(target/TOTAL*100)+'%';
   clock.textContent=target.toFixed(1).padStart(4,'0')+' / '+TOTAL.toFixed(1);
 
   void stage.offsetWidth;
-  const activeLocalMs=Math.max(0,(target-active.t)*1000);
+  const activeLocalMs=Math.max(0,(target-sceneVisualStart(activeIdx))*1000);
   const prevLocalMs=prevIdx>=0
-    ? Math.max(0,(active.t-SCENES[prevIdx].t)*1000)
+    ? Math.max(0,(sceneVisualStart(activeIdx)-sceneVisualStart(prevIdx))*1000)
     : 0;
   document.getAnimations().forEach(animation=>{
     const animTarget=animation.effect && animation.effect.target;
@@ -363,7 +376,7 @@ function renderFrameForExport(t){
     if(scene===activeEl){
       ms=activeLocalMs;
       if(active.id==='s7' && animTarget.closest('.endcard')){
-        ms=Math.max(0,(target-ENDCARD_AT)*1000);
+        ms=Math.max(0,(target-endphaseStart())*1000);
       }
     }else if(scene===prevEl){
       ms=prevLocalMs;

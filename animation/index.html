@@ -640,11 +640,26 @@
           </div>
         </div>
 
-        <!-- outcome keyword cards filling the right space, with rise/fall motion -->
-        <div class="s7out">
-          <div class="ocard up"   style="--d:1.5s"><span class="oar">↑</span>Earlier action</div>
-          <div class="ocard down" style="--d:1.8s"><span class="oar">↓</span>Lower inputs</div>
-          <div class="ocard up"   style="--d:2.1s"><span class="oar">↑</span>Focused work</div>
+        <!-- growth curves: efficiency + revenue/yield rising over the season,
+             the right-side hero (replaces the old outcome keyword cards). -->
+        <div class="s7chart">
+          <div class="s7chart-head"><span class="s7chart-arrow">↑</span>Season trend</div>
+          <svg class="s7chart-svg" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid meet">
+            <g class="s7chart-grid">
+              <line x1="16" y1="70"  x2="452" y2="70"/>
+              <line x1="16" y1="130" x2="452" y2="130"/>
+              <line x1="16" y1="190" x2="452" y2="190"/>
+              <line x1="16" y1="250" x2="452" y2="250"/>
+            </g>
+            <path class="s7line rev" pathLength="1" d="M20,236 C92,224 152,196 244,160 C322,128 384,96 444,60"/>
+            <path class="s7line eff" pathLength="1" d="M20,248 C92,240 152,222 244,196 C322,174 384,144 444,106"/>
+            <circle class="s7dot rev" cx="444" cy="60"  r="6.5"/>
+            <circle class="s7dot eff" cx="444" cy="106" r="6.5"/>
+          </svg>
+          <div class="s7chart-legend">
+            <span class="s7leg rev"><i></i>Revenue / yield</span>
+            <span class="s7leg eff"><i></i>Efficiency</span>
+          </div>
         </div>
 
         <svg class="farmer farmerhappy" viewBox="0 0 170 260">
