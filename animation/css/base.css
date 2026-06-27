@@ -133,6 +133,7 @@ html[data-perf="lite"] #caption{background:rgba(7,18,22,.86)}
   transition:opacity .42s var(--ease-out),clip-path .55s var(--ease-out);
 }
 #caption.show{opacity:1;clip-path:inset(0 0 0 0)}
+body.frame-export #caption{transition:none}
 
 /* global colour-grade — gentle lift, NOT a heavy dark wash */
 #stage::after{content:"";position:absolute;inset:0;z-index:49;pointer-events:none;
