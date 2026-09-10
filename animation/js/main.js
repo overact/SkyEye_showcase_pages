@@ -87,25 +87,54 @@
    To restore it: remove the `hidden` attribute from <section id="s5"> in
    index.html, then re-insert {id:'s5',t:…,label:'LLM agronomist'} below and
    re-time the entries that follow. */
-/* Scene starts, captions, TOTAL and ENDCARD_AT below are DERIVED FROM THE AUDIO
-   by tools/gen-voiceover.py (it prints a paste-ready block). The narration is a
-   continuous per-scene read; captions are a verbatim transcript so what you hear
-   matches what you read. Re-run the generator and paste its output after any
-   script change — don't hand-edit these to drift from voiceover.mp3.
-   (s0 starts at t:0 so the orbit is on screen from frame 0; the voice itself
-   has a 0.4s lead-in, which is why the first caption is at 0.4.) */
+/* Measured from Gemini 3.1 Flash TTS / Sulafat scene reads.
+   tools/gen-gemini-voiceover.py generates audio and cue metadata;
+   tools/apply-gemini-voiceover.py applies them together. Keep all timing fields
+   in sync with animation/audio/voiceover.mp3. The opener has a 0.4s lead-in. */
 const SCENES=[
-  {id:'s0', t:0, label:'Australian context'},
-  {id:'s1', t:6.3, label:'Scale problem'},
-  {id:'s2', t:15.81, label:'Data limits'},
-  {id:'ssol', t:21.66, label:'SkyEye approach'},
-  {id:'s3', t:27.98, label:'Drone capture'},
-  {id:'s4', t:33.47, label:'Deep learning'},
-  {id:'s6', t:39.41, label:'Action dashboard'},
-  {id:'s7', t:47.53, label:'Farm outcome'},
+  {
+    "id": "s0",
+    "t": 0,
+    "label": "Australian context"
+  },
+  {
+    "id": "s1",
+    "t": 5.64,
+    "label": "Scale problem"
+  },
+  {
+    "id": "s2",
+    "t": 15.73,
+    "label": "Data limits"
+  },
+  {
+    "id": "ssol",
+    "t": 21.53,
+    "label": "SkyEye approach"
+  },
+  {
+    "id": "s3",
+    "t": 28.26,
+    "label": "Drone capture"
+  },
+  {
+    "id": "s4",
+    "t": 33.89,
+    "label": "Deep learning"
+  },
+  {
+    "id": "s6",
+    "t": 39.75,
+    "label": "Action dashboard"
+  },
+  {
+    "id": "s7",
+    "t": 48.64,
+    "label": "Farm outcome"
+  }
 ];
-const TOTAL=61.0;
-const ENDCARD_AT=54.53;
+const TOTAL=62.6;
+const ENDCARD_AT=56.01;
 // Scenes activate this many seconds BEFORE their audio cue, so the incoming
 // scene's motion overlaps the tail of the previous voice instead of waiting for
 // it to finish (kills the dead beat at scene ends). Captions/clock stay on the
@@ -113,15 +142,42 @@ const ENDCARD_AT=54.53;
 const SCENE_LEAD=0.6;
 const SCENE_FADE_MS=550;
 const CAPTIONS=[
-  [0.4, "Australian agriculture creates over AUD 50 billion a year."],
-  [6.3, "But many farms are too vast to inspect by hand — one farmer may manage thousands of hectares, and checking it all costs time and fuel."],
-  [15.81, "Data helps, but it is often delayed, scattered, or too coarse to act on."],
-  [21.66, "That is where SkyEye comes in — drone inspection from above, analysed by AI."],
-  [27.98, "Drones capture high-resolution, multispectral views of every paddock."],
-  [33.47, "AI vision flags crop stress, weeds, pests, and irrigation risks."],
-  [39.41, "SkyEye combines detections with farm records into one action map — fix this zone, spray only where needed."],
-  [47.53, "So farmers focus on what matters first — acting earlier, spending less, and growing more."],
-  [54.68, "SkyEye — turning aerial inspection into clear farm actions."],
+  [
+    0.4,
+    "Australian agriculture creates over AUD 50 billion a year."
+  ],
+  [
+    5.64,
+    "But many farms are too vast to inspect by hand — one farmer may manage thousands of hectares, and checking it all costs time and fuel."
+  ],
+  [
+    15.73,
+    "Data helps, but it is often delayed, scattered, or too coarse to act on."
+  ],
+  [
+    21.53,
+    "That is where SkyEye comes in — drone inspection from above, analysed by AI."
+  ],
+  [
+    28.26,
+    "Drones capture high-resolution, multispectral views of every paddock."
+  ],
+  [
+    33.89,
+    "AI vision flags crop stress, weeds, pests, and irrigation risks."
+  ],
+  [
+    39.75,
+    "SkyEye combines detections with farm records into one action map — fix this zone, spray only where needed."
+  ],
+  [
+    48.64,
+    "So farmers focus on what matters first — acting earlier, spending less, and growing more."
+  ],
+  [
+    56.16,
+    "SkyEye — turning aerial inspection into clear farm actions."
+  ]
 ];
 
 const stage=document.getElementById('stage');
@@ -137,13 +193,21 @@ const urlParams=new URLSearchParams(location.search);
 const recordingMode=urlParams.has('rec');
 
 let playing=false, base=0, startStamp=0, raf=null, curScene=-1, curCap=-2, ended=false;
-let lastAudioReconcile=0;
+let voiceoverPlayGeneration=0;
+const audioStatus=document.getElementById('audioStatus');
 let pendingVoiceoverSeek=null;
 const leaveTimers=new Map();
 let captionTimer=null;
 
 const now=()=>performance.now()/1000;
-const elapsed=()=>playing? base+(now()-startStamp) : base;
+const elapsed=()=>{
+  if(!playing) return base;
+  // Audio is the clock: buffering must never skip words to catch up to visuals.
+  if(shouldUseVoiceover()){
+    return pendingVoiceoverSeek || voiceover.seeking ? base : clampTime(voiceover.currentTime);
+  }
+  return base+(now()-startStamp);
+};
 const hasVoiceover=()=>Boolean(voiceover && (
   voiceover.currentSrc ||
   voiceover.getAttribute('src') ||
@@ -247,11 +311,22 @@ function exitFrameExportMode(){
     try{ animation.play(); }catch(e){}
   });
 }
+function setAudioStatus(message){
+  if(audioStatus) audioStatus.textContent=message;
+}
 function startVoiceover(){
-  const attempt=voiceover.play();
-  if(attempt && typeof attempt.catch==='function'){
-    attempt.catch(e=>console.warn('Voice-over playback failed:', e.message));
-  }
+  if(!playing) return;
+  const request=voiceoverPlayGeneration;
+  const failed=()=>{
+    if(request!==voiceoverPlayGeneration || !playing) return;
+    pause();
+    setAudioStatus('Narration could not start. Press Play to retry.');
+  };
+  stage.classList.add('paused');
+  setAudioStatus('Loading narration…');
+  try{
+    voiceover.play()?.catch(failed);
+  }catch(e){ failed(); }
 }
 function deferVoiceoverSeek(t, playWhenReady){
   clearPendingVoiceoverSeek();
@@ -263,7 +338,7 @@ function deferVoiceoverSeek(t, playWhenReady){
     }catch(e){
       console.warn('Voice-over deferred seek failed:', e.message);
     }
-    if(playWhenReady) startVoiceover();
+    if(playWhenReady && playing) startVoiceover();
   };
   pendingVoiceoverSeek={event,handler};
   voiceover.addEventListener(event,handler,{once:true});
@@ -282,16 +357,41 @@ function syncVoiceover(t, playWhenReady=false){
 }
 function playVoiceover(t=elapsed()){
   if(!shouldUseVoiceover()) return;
+  voiceoverPlayGeneration++;
   syncVoiceover(t, true);
-  startVoiceover();
+  if(!pendingVoiceoverSeek) startVoiceover();
+  else {
+    stage.classList.add('paused');
+    setAudioStatus('Loading narration…');
+  }
 }
 function pauseVoiceover(){
+  voiceoverPlayGeneration++;
+  clearPendingVoiceoverSeek();
   if(shouldUseVoiceover()) voiceover.pause();
+  setAudioStatus('');
 }
-function reconcileVoiceover(t){
-  if(!shouldUseVoiceover() || voiceover.paused || t-lastAudioReconcile<5) return;
-  lastAudioReconcile=t;
-  if(Math.abs(voiceover.currentTime-t)>.2) syncVoiceover(t);
+if(voiceover){
+  voiceover.addEventListener('playing',()=>{
+    if(!shouldUseVoiceover() || !playing) return;
+    stage.classList.remove('paused');
+    setAudioStatus('');
+  });
+  for(const event of ['waiting','seeking']){
+    voiceover.addEventListener(event,()=>{
+      if(!shouldUseVoiceover() || !playing) return;
+      stage.classList.add('paused');
+      setAudioStatus('Loading narration…');
+    });
+  }
+  voiceover.addEventListener('error',()=>{
+    if(!shouldUseVoiceover()) return;
+    pause();
+    setAudioStatus('Narration could not load. Reload the page to retry.');
+  });
+  voiceover.addEventListener('ended',()=>{
+    if(shouldUseVoiceover() && playing) finish();
+  });
 }
 function renderAt(t){
   activateScene(sceneIndexAtVisual(t));
@@ -404,7 +504,6 @@ function frame(){
   const t=elapsed();
   if(t>=TOTAL){ finish(); return; }
   renderAt(t);
-  reconcileVoiceover(t);
   raf=requestAnimationFrame(frame);
 }
 function play(){
